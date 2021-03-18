@@ -1,0 +1,87 @@
+regex notes:
+===========
+
+Metacharacters which have special meaning and must be escaped with \ when we want to use them as characters.
+( ) [ ] { } ^ $ . \ ? * + |
+
+something in square brackets [ ] means exactly one character 
+
+[abc] a or b or c
+[^abc] any character except a, b or c (it is a negation)
+[a-ZA-Z] alphabet both in uppercase/lowercase
+
+\d  [0-9]
+\D  [^\d] means anything except 0-9 
+\s  [ \n\t\x\f\r] it matches for single white-space characters like: space, newline, tab, return
+\S  [^\s] matches anything except the whitespace character
+\A  Matches if the specific character is start of the string 
+
+for example:
+Expression	String	      Matched?
+\Athe	      the sun	      Match
+            In the sun	  No match
+
+\Z Matches if the specific character is at at the end of the string 
+
+for example:
+Expression	      String	                            Matched?
+Python\Z	      I like Python	                        1 match
+                I like Python Programming	            No match
+                Python is fun.	                      No match
+
+
+\b word boundary it checks if the specified characters are at the beginning or at end of the word.
+\B it do negation of \b
+
+\w it is equal to [a-zA-Z0-9_]
+\W it is equal to [^a-zA-Z0-9_]
+
+
+^ The caret symbol ^ is used to check if a string starts with a certain character.
+$ The caret symbol $ is used to check if a string ends with a certain character.
+
+. it matches for any single character except newline \n.
+
+* zero or more occurances of a pattern
++ one or more occurances of a pattern
+ma*n   mn  (remove prceding character 0 times)
+       man  (1 occurance and followed by n)
+       maaan 
+       main (it will not match)
+       woman (match)
+       
+go*gle	contains {ggle, gogle, google, gooogle, goooogle, ...}
+go+gle	contains {gogle, google, gooogle, goooogle, ...}
+g(oog)+le	contains {google, googoogle, googoogoogle, googoogoogoogle, ...}
+
+
+Quantifiers
+
+                                  Eager	      Reluctant	        Possessive
+Zero or one	                        ?	            ??	              ?+
+Zero or more	                      *	            *?	              *+
+One or more	                        +	            +?	              ++
+m times	                            {m}	          {m}?	            {m}+
+At least m times	                  {m,}	        {m,}?	            {m,}+
+At least m, at most n times	       {m,n}	       {m,n}?	            {m,n}+
+
+
+Eager (Greedy and Generous) — match as much as possible, but give back
+
+Possessive — match as much as possible, but do NOT give back
+
+Reluctant — match as little as possible
+
+
+Parentheses () is used to group sub-patterns. For example, (a|b|c)xz match any string that matches either a or b or c followed by xz
+
+
+re.findall()
+re.split()
+re.sub()
+re.subn()
+re.search()
+match.group()
+match.span()
+match.start()
+match.end()
